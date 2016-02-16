@@ -12,13 +12,16 @@ var argv = require("yargs")
     .example("ascii2svg - -", "Read on stdin and print on stdout")
     .demand(2, 2)
     .help("h")
+    .boolean("H")
     .describe({
-      t: "Input type"
+      t: "Input type",
+      H: "Wrap output in HTML",
     })
     .choices("t", parser.parsers())
     .default("t", "ascii")
     .alias("h", "help")
     .alias("t", "type")
+    .alias("H", "html")
     .detectLocale(false)
   //.strict()
     .argv;
@@ -69,6 +72,16 @@ readFile(input, function(err, data) {
       links: result.links,
       // add more options here
     }).then(function(result) {
+      if (argv.html) {
+        result = (
+          '<!doctype html><html lang="en" dir="ltr">' +
+          '<head><meta charset="utf-8"/></head><body>' +
+          result +
+          "</body></html>"
+        )
+      }
+
+
       writeFile(output, result, function(err) {
         if (err) {
           console.log(err);
