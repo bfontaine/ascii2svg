@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-var draw   = require("../lib/draw"),
+var fs     = require("fs"),
+
+    draw   = require("../lib/draw"),
     parser = require("../lib/parser");
 
 require("../lib/ascii").activate();
@@ -7,17 +9,75 @@ require("../lib/ascii").activate();
 var argv = require("yargs")
     .usage("Usage: $0 [options] <input> <output>")
     .example("ascii2svg in.txt out.svg", "Read from in.txt and write to out.svg")
-    .example("ascii2svg -t ascii - -", "Read ASCII on stdin and print on stdout")
+    .example("ascii2svg - -", "Read on stdin and print on stdout")
     .demand(2, 2)
     .help("h")
-    .string("t")
-    .describe("t", "Input type")
+    .describe({
+      t: "Input type"
+    })
     .choices("t", parser.parsers())
+    .default("t", "ascii")
     .alias("h", "help")
     .alias("t", "type")
     .detectLocale(false)
   //.strict()
     .argv;
 
-// test
-console.log(argv);
+function readFile(name, done) {
+  if (name != "-") {
+    return fs.readFile(name, done);
+  }
+
+  // STDIN
+  var stdin = process.stdin,
+      chunks = [];
+
+  stdin.resume();
+  stdin.setEncoding("utf8");
+
+  stdin.on("data", function(chunk) {
+    chunks.push(chunk);
+  });
+
+  stdin.on("end", function() {
+    done(null, chunks.join(""));
+  });
+}
+
+function writeFile(name, data, done) {
+  if (name != "-") {
+    return fs.writeFile(name, data, done);
+  }
+
+  // STDOUT
+  process.stdout.write(data);
+  return done();
+}
+
+var input  = argv._[0],
+    output = argv._[1];
+
+readFile(input, function(err, data) {
+  if (err) {
+    return console.log(err);
+    process.exit(1);
+  }
+
+  parser.parseAs(argv.t, data).then(function(result) {
+    draw.drawGraph({
+      nodes: result.nodes,
+      links: result.links,
+      // add more options here
+    }).then(function(result) {
+      writeFile(output, result, function(err) {
+        if (err) {
+          console.log(err);
+          process.exit(1);
+        }
+      });
+    }, function(err) {
+      console.log(err);
+      process.exit(1);
+    });
+  });
+});
