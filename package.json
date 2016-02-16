@@ -21,5 +21,9 @@
   "bin": {
     "ascii2svg": "./bin/ascii2svg"
   },
-  "preferGlobal": true
+  "preferGlobal": true,
+  "dependencies": {
+    "d3": "^3.5.15",
+    "jsdom": "^8.0.2"
+  }
 }
