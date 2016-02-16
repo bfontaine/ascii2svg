@@ -21,11 +21,6 @@ Options:
 * `--html`: wrap the resulting SVG in an HTML page so that you can open it in
   your browser.
 
-## Tips
-
-* You can use [`browser`](https://gist.github.com/defunkt/318247) for quick
-  previews: `echo -e "a->b\nb->c" | ascii2svg --html - - | browser`
-
 ## Formats
 
 ### ASCII
@@ -44,3 +39,8 @@ with as many hyphens as you want.
 
 The example above creates a graph of 4 nodes with three edges connecting `b` to
 all other nodes.
+
+## Tips
+
+* You can use [`browser`](https://gist.github.com/defunkt/318247) for quick
+  previews: `echo -e "a->b->c" | ascii2svg --html - - | browser`
