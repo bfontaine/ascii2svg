@@ -1,2 +1,23 @@
 #!/usr/bin/env node
+var draw   = require("../lib/draw"),
+    parser = require("../lib/parser");
 
+require("../lib/ascii").activate();
+
+var argv = require("yargs")
+    .usage("Usage: $0 [options] <input> <output>")
+    .example("ascii2svg in.txt out.svg", "Read from in.txt and write to out.svg")
+    .example("ascii2svg -t ascii - -", "Read ASCII on stdin and print on stdout")
+    .demand(2, 2)
+    .help("h")
+    .string("t")
+    .describe("t", "Input type")
+    .choices("t", parser.parsers())
+    .alias("h", "help")
+    .alias("t", "type")
+    .detectLocale(false)
+  //.strict()
+    .argv;
+
+// test
+console.log(argv);
