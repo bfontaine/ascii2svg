@@ -1,6 +1,6 @@
 {
   "name": "ascii2svg",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha",
   "description": "Generate SVG graphs from ASCII descriptions",
   "main": "lib/main.js",
   "repository": {
