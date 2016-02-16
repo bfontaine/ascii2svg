@@ -43,4 +43,4 @@ all other nodes.
 ## Tips
 
 * You can use [`browser`](https://gist.github.com/defunkt/318247) for quick
-  previews: `echo -e "a->b->c" | ascii2svg --html - - | browser`
+  previews: `echo "a->b->c" | ascii2svg --html - - | browser`
