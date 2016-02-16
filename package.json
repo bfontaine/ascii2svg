@@ -1,0 +1,25 @@
+{
+  "name": "ascii2svg",
+  "version": "0.1.0",
+  "description": "Generate SVG graphs from ASCII descriptions",
+  "main": "lib/main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bfontaine/ascii2svg.git"
+  },
+  "keywords": [
+    "graphs",
+    "svg",
+    "ascii"
+  ],
+  "author": "Baptiste Fontaine <b@ptistefontaine.fr>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bfontaine/ascii2svg/issues"
+  },
+  "homepage": "https://github.com/bfontaine/ascii2svg#readme",
+  "bin": {
+    "ascii2svg": "./bin/ascii2svg"
+  },
+  "preferGlobal": true
+}
